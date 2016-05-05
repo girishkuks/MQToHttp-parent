@@ -38,31 +38,33 @@ public class AddUDPs extends CommonJavaCompute {
 		
 		logger.info("AddUDPs:execute()");
 		
-		// Set HTTP URL
-		MbElement requestURL = outAssembly.getLocalEnvironment().getRootElement().getFirstElementByPath("/Destination/HTTP/RequestURL");
-		requestURL.setValue(getUserDefinedAttribute("HTTP_URL"));
+		// Create LocalEnvironment/Destination
+		MbElement destination = outAssembly.getLocalEnvironment().getRootElement()
+				.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "Destination","");
+				
+		// Create LocalEnvironement/Destination/HTTP
+		MbElement http = destination.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "HTTP","");
+		
+		// Create LocalEnvironement/Destination/MQ
+		MbElement mq = destination.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "MQ","");
+		
 		
 		// Set HTTP Method
-		MbElement requestMethod = outAssembly.getLocalEnvironment().getRootElement().getFirstElementByPath("/Destination/HTTP/RequestLine/Method");
-		requestURL.setValue(getUserDefinedAttribute("HTTP_METHOD"));
+		MbElement requestMethod = http.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "RequestLine", "")		
+				.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "Method", "")	;
+		requestMethod.setValue(getUserDefinedAttribute("HTTP_METHOD"));	
 		
-		// Get message root element
-		MbElement root = outAssembly.getMessage().getRootElement();
-		
-		// Get Reply To Queue 
-		MbElement replyToQ = root.getFirstElementByPath("/MQMD/ReplyToQ");
-		logger.info("Original ReplyToQ = {}", replyToQ.getValueAsString());
+		// Set HTTP URL
+		MbElement requestURL = http.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "RequestURL", "");
+		requestURL.setValue(getUserDefinedAttribute("HTTP_URL"));
+				
 
 		// Create Local Environment Output Queue element
-		MbElement outputQ = outAssembly.getLocalEnvironment().getRootElement()
-				.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "Destination","")
-				.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "MQ", "")
-				.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "DestinationData", "")
+		MbElement outputQ = mq.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "DestinationData", "")
 				.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "queueName", "");
 		
 		// Set output Queue Name to User Defined Property: outputQueue
 		outputQ.setValue((String) getUserDefinedAttribute("OUTPUT_QUEUE"));
-		logger.info("{} = {}", outputQ.getName(), outputQ.getValue());
 				
 	}
 
