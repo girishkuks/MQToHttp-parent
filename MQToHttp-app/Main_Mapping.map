@@ -9,7 +9,7 @@
         <input namespace="http://www.ibm.com/iib/msl/json" path="$var/mb:msg(JSON,assembly,JSON,Properties)" var="ComIbmMessageAssembly_JSON">
             <cast castType="userDefined" path="$ComIbmMessageAssembly_JSON/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}JSONObject" ref="var"/>
         </input>
-        <output namespace="http://www.ibm.com/iib/msl/json" path="$var1/mb:msg(JSON,assembly,JSON,LocalEnvironment,Properties)" var="ComIbmMessageAssembly_JSON1">
+        <output namespace="http://www.ibm.com/iib/msl/json" path="$var1/mb:msg(JSON,assembly,JSON,LocalEnvironment,Properties,MQMD,HTTPInputHeader,HTTPResponseHeader)" var="ComIbmMessageAssembly_JSON1">
             <cast castType="userDefined" path="$ComIbmMessageAssembly_JSON1/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}JSONObject" ref="var1"/>
         </output>
         <move>

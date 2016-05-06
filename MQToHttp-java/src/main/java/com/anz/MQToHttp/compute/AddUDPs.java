@@ -65,6 +65,13 @@ public class AddUDPs extends CommonJavaCompute {
 		
 		// Set output Queue Name to User Defined Property: outputQueue
 		outputQ.setValue((String) getUserDefinedAttribute("OUTPUT_QUEUE"));
+		
+		// Create Content-type HTTP Input Header
+		MbElement contentType = outAssembly.getMessage().getRootElement()
+				.getFirstElementByPath("/BLOB")
+				.createElementBefore(MbElement.TYPE_NAME_VALUE, "HTTPInputHeader", "")
+				.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "Content-Type", "");
+		contentType.setValue("application/json");
 				
 	}
 
