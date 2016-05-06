@@ -157,7 +157,7 @@ public class MQToHttpFlowTest extends FlowTest {
 
 		assertNotNull(out);
 		assertEquals(0, out.getLeft());
-		assertEquals(100, out.getRight());
+		assertEquals(0, out.getRight());
 		
 	
 	}

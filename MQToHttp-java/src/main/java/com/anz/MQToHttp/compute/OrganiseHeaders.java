@@ -25,7 +25,7 @@ import com.ibm.broker.config.proxy.AttributeConstants;
  * @author sanketsw & psamon
  *
  */
-public class ShuffleHeaders extends CommonJavaCompute {
+public class OrganiseHeaders extends CommonJavaCompute {
 	
 	private static final Logger logger = LogManager.getLogger();
 
