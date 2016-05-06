@@ -35,8 +35,19 @@ public class PreTransformBLSample implements ITransformer<String, String> {
 		NumbersInput json = (NumbersInput) TransformUtils.fromJSON(inputJson,
 				NumbersInput.class);
 		logger.info("Inside PreTransform");
+		//------------------------------------------------------------------------------------------
+		// User Code Below
 		
+		
+		// Example user code
 		json.setLeft(json.getLeft() + 100);
+		
+		
+		// End User Code
+		//------------------------------------------------------------------------------------------
+
+		
+		
 		String out = TransformUtils.toJSON(json);
 		return out;
 	}

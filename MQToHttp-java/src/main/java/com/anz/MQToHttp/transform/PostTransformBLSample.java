@@ -35,23 +35,29 @@ public class PostTransformBLSample implements ITransformer<String, String> {
 	/* (non-Javadoc)
 	 * @see com.anz.common.transform.IJsonJsonTransformer#execute(java.lang.String)
 	 */
+	
+	
 	public String execute(String inputJson, Logger logger, ComputeInfo metadata) throws Exception {
 		NumbersInput json = (NumbersInput) TransformUtils.fromJSON(inputJson,
 				NumbersInput.class);
+		
+
+		
+		
 		logger.info("Inside Java Compute");	
 		if(json == null){
 			//ifx code here from cache
-			logger.info("json is null: MQ Application returned error.");
+			logger.info("json is null: REST Application returned error.");
 			IFXCodeDomain.getInstance().getErrorCode("500");
 		} else {
 			// do the response tranform and return
-			logger.info("json not null: MQ Application successful");
+			logger.info("json not null: REST Application successful");
 			//------------------------------------------------------------------------------------------
 			// User Code Below
 			
 			
 			// Example user code
-			json.setRight(json.getRight() + 100);
+			//json.setRight(json.getRight() + 100);
 			
 			
 			// End User Code

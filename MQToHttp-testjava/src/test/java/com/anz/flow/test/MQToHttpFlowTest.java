@@ -106,6 +106,7 @@ public class MQToHttpFlowTest extends FlowTest {
 		
 		//Test individual node outputs
 		testPreTransformNodeOutput();
+		testHttpResponseOutput();
 		testPostTransformNodeOutput();
 		
 
@@ -126,18 +127,38 @@ public class MQToHttpFlowTest extends FlowTest {
 		
 	}
 	
+	public void testHttpResponseOutput() throws ConfigManagerProxyPropertyNotInitializedException, XPathExpressionException, SAXException, IOException, ParserConfigurationException {	
+		
+		// PreTransform Node
+		List<RecordedTestData> dataList = getTestDataList("HTTP Request");
+		
+		String json = getNodeOutputJsonStringFromBlob(dataList.get(0));
+		JsonNode root = objectMapper.readTree(json);
+		
+		String element = root.at("/imeplementation").asText(); // The element can be specified as /Data/Account/right
+		assertEquals("Java_SpringBoot", element);
+		
+		element = root.at("/result").asText();
+		assertEquals("112", element);	
+		
+	}
+	
 	
 	public void testPostTransformNodeOutput() throws ConfigManagerProxyPropertyNotInitializedException, XPathExpressionException, SAXException, IOException, ParserConfigurationException {	
 		
-		// PreTransform Node
+			
+		// PostTransform node
+		
 		List<RecordedTestData> dataList = getTestDataList("Transform Response");
+		
 		
 		String json = getNodeOutputJsonStringFromBlob(dataList.get(0));
 		NumbersInput out = gson.fromJson(json, NumbersInput.class);
 
 		assertNotNull(out);
-		assertEquals(105, out.getLeft());
-		assertEquals(107, out.getRight());
-			
+		assertEquals(0, out.getLeft());
+		assertEquals(100, out.getRight());
+		
+	
 	}
 }
