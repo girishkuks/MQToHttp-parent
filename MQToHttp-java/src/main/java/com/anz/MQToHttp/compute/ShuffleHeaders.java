@@ -47,7 +47,7 @@ public class ShuffleHeaders extends CommonJavaCompute {
 		// Create HTTPResponseHeader before BLOB element
 		MbElement newResponse = message.getLastChild().createElementBefore(MbElement.TYPE_NAME_VALUE, "HTTPResponseHeader","");
 		
-		newResponse.setValue(response);
+		newResponse.copyElementTree(response);
 		
 		// Detach and delete original HTTPResponseHeader
 		response.delete();
