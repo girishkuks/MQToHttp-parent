@@ -45,8 +45,9 @@ public class AddUDPs extends CommonJavaCompute {
 		// Create LocalEnvironement/Destination/HTTP
 		MbElement http = destination.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "HTTP","");
 		
-		// Create LocalEnvironement/Destination/MQ
-		MbElement mq = destination.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "MQ","");
+		// Create LocalEnvironement/Destination/MQ/DestinationData
+		MbElement destinationData = destination.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "MQ","")
+				.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "DestinationData","");
 		
 		
 		// Set HTTP Method
@@ -58,13 +59,17 @@ public class AddUDPs extends CommonJavaCompute {
 		MbElement requestURL = http.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "RequestURL", "");
 		requestURL.setValue(getUserDefinedAttribute("HTTP_URL"));
 				
-
 		// Create Local Environment Output Queue element
-		MbElement outputQ = mq.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "DestinationData", "")
-				.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "queueName", "");
+		MbElement outputQ = destinationData.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "queueName", "");
+		
+		// Create Local Environment Output Queue Manager element
+		MbElement outputQMgr = destinationData.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "queueManagerName", "");
 		
 		// Set output Queue Name to User Defined Property: outputQueue
 		outputQ.setValue((String) getUserDefinedAttribute("OUTPUT_QUEUE"));
+		
+		// Set output Queue Manager Name to User Defined Property: outputQueue
+		outputQMgr.setValue((String) getUserDefinedAttribute("OUTPUT_QUEUE_MGR"));
 		
 		// Create Content-type HTTP Input Header
 		MbElement contentType = outAssembly.getMessage().getRootElement()
