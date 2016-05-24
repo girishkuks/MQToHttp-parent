@@ -22,10 +22,4 @@ public class ResponseTransformCompute extends CommonBlobTransformCompute {
 		return new PostTransformBLSample();
 	}
 
-	@Override
-	public void saveUserProvidedProperties(MbMessageAssembly outAssembly) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

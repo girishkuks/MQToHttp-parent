@@ -153,11 +153,13 @@ public class MQToHttpFlowTest extends FlowTest {
 		
 		
 		String json = getNodeOutputJsonStringFromBlob(dataList.get(0));
-		NumbersInput out = gson.fromJson(json, NumbersInput.class);
+		Result out = gson.fromJson(json, Result.class);
+		
+		String expectedComment = "The sum of left and right is 112 . The result plus 100 is 212.";
 
 		assertNotNull(out);
-		assertEquals(0, out.getLeft());
-		assertEquals(0, out.getRight());
+		assertEquals("212", out.getResult());
+		assertEquals(expectedComment, out.getComment());
 		
 	
 	}

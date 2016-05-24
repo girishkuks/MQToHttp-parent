@@ -45,11 +45,6 @@ public class AddUDPs extends CommonJavaCompute {
 		// Create LocalEnvironement/Destination/HTTP
 		MbElement http = destination.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "HTTP","");
 		
-		// Create LocalEnvironement/Destination/MQ/DestinationData
-		MbElement destinationData = destination.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "MQ","")
-				.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "DestinationData","");
-		
-		
 		// Set HTTP Method
 		MbElement requestMethod = http.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "RequestLine", "")		
 				.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "Method", "")	;
@@ -58,18 +53,24 @@ public class AddUDPs extends CommonJavaCompute {
 		// Set HTTP URL
 		MbElement requestURL = http.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "RequestURL", "");
 		requestURL.setValue(getUserDefinedAttribute("HTTP_URL"));
-				
-		// Create Local Environment Output Queue element
-		MbElement outputQ = destinationData.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "queueName", "");
+	
+		// Get replyToQ
+		MbElement replyToQ = outAssembly.getMessage().getRootElement().getFirstElementByPath("/MQMD/ReplyToQ");
 		
-		// Create Local Environment Output Queue Manager element
-		MbElement outputQMgr = destinationData.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "queueManagerName", "");
+		if(replyToQ == null || replyToQ.getValueAsString().trim().isEmpty()){
+			
+			replyToQ.setValue(getUserDefinedAttribute("OUTPUT_QUEUE"));
+			
+		}
 		
-		// Set output Queue Name to User Defined Property: outputQueue
-		outputQ.setValue((String) getUserDefinedAttribute("OUTPUT_QUEUE"));
+		// Get replyToQMgr
+		MbElement replyToQMgr = outAssembly.getMessage().getRootElement().getFirstElementByPath("/MQMD/ReplyToQMgr");
 		
-		// Set output Queue Manager Name to User Defined Property: outputQueue
-		outputQMgr.setValue((String) getUserDefinedAttribute("OUTPUT_QUEUE_MGR"));
+		if(replyToQMgr == null || replyToQMgr.getValueAsString().trim().isEmpty()){
+			
+			replyToQMgr.setValue(getUserDefinedAttribute("OUTPUT_QUEUE_MGR"));
+			
+		}		
 		
 		// Create Content-type HTTP Input Header
 		MbElement contentType = outAssembly.getMessage().getRootElement()

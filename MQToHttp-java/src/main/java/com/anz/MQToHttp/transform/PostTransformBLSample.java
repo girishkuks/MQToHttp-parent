@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.anz.MQToHttp.transform.pojo.NumbersInput;
+import com.anz.MQToHttp.transform.pojo.Result;
 
 import com.anz.common.compute.ComputeInfo;
 import com.anz.common.transform.ITransformer;
@@ -37,32 +38,24 @@ public class PostTransformBLSample implements ITransformer<String, String> {
 	 */
 	
 	
-	public String execute(String inputJson, Logger logger, ComputeInfo metadata) throws Exception {
-		NumbersInput json = (NumbersInput) TransformUtils.fromJSON(inputJson,
-				NumbersInput.class);
+	public String execute(String inputJson, Logger appLogger, ComputeInfo metadata) throws Exception {
+		Result json = (Result) TransformUtils.fromJSON(inputJson,
+				Result.class);
 		
-
+		json.setComment("The sum of left and right is " + json.getResult() + " .");
+		
+		// Add 100 to result
+		Integer newResult = Integer.parseInt(json.getResult()) + 100;
+		
+		json.setResult(newResult.toString());
+		
+		logger.info("result = {}", json.getResult());
+		
+		json.setComment(json.getComment() + " The result plus 100 is " + json.getResult() + ".");
+		
+		logger.info("comment: {}", json.getComment());
 		
 		
-		logger.info("Inside Java Compute");	
-		if(json == null){
-			//ifx code here from cache
-			logger.info("json is null: REST Application returned error.");
-			IFXCodeDomain.getInstance().getErrorCode("500");
-		} else {
-			// do the response tranform and return
-			logger.info("json not null: REST Application successful");
-			//------------------------------------------------------------------------------------------
-			// User Code Below
-			
-			
-			// Example user code
-			//json.setRight(json.getRight() + 100);
-			
-			
-			// End User Code
-			//------------------------------------------------------------------------------------------
-		}
 		String out = TransformUtils.toJSON(json);
 		return out;
 	}

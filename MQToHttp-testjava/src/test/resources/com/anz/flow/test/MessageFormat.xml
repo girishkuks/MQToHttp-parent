@@ -50,8 +50,8 @@
 		<MsgId iib:valueType="BLOB">414d5120514d47522020202020202020aac916572ef90220</MsgId>
 		<CorrelId iib:valueType="BLOB">000000000000000000000000000000000000000000000000</CorrelId>
 		<BackoutCount iib:valueType="INTEGER">0</BackoutCount>
-		<ReplyToQ iib:valueType="CHARACTER">OUT                                       </ReplyToQ>
-		<ReplyToQMgr iib:valueType="CHARACTER">QMGR                                            </ReplyToQMgr>
+		<ReplyToQ iib:valueType="CHARACTER">OUT                                      </ReplyToQ>
+		<ReplyToQMgr iib:valueType="CHARACTER">                                         </ReplyToQMgr>
 		<UserIdentifier iib:valueType="CHARACTER">
 		</UserIdentifier>
 		<AccountingToken iib:valueType="BLOB">0000000000000000000000000000000000000000000000000000000000000000</AccountingToken>

@@ -22,6 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
+import com.anz.MQToHttp.transform.pojo.NumbersInput;
 import com.anz.common.error.ExceptionMessage;
 import com.anz.common.test.FlowTest;
 import com.anz.common.transform.TransformUtils;
@@ -67,8 +68,9 @@ public class MQToHttpFlowFailureTest extends FlowTest {
 		// load test data from file
 		String message = IOUtils.toString(MQToHttpFlowTest.class.getResourceAsStream(TEST_FILE_001));
 		//String jsonBlob = TransformUtils.getBlob(message);
-		//String messageFormat = IOUtils.toString(MQToHttpFlowTest.class.getResourceAsStream(MESSAGE_FORMAT));
-		//message = messageFormat.replace("MESSAGE_FORMAT", jsonBlob);
+		String messageFormat = IOUtils.toString(MQToHttpFlowTest.class.getResourceAsStream(MESSAGE_FORMAT));
+		message = messageFormat.replace("MESSAGE_FORMAT", message);
+		
 		
 		Properties injectProps = new Properties();
 		injectProps.setProperty(AttributeConstants.DATA_INJECTION_APPLICATION_LABEL, applicationName); 		
@@ -95,11 +97,12 @@ public class MQToHttpFlowFailureTest extends FlowTest {
 		
 
 	}
+	
 
 	public void testOutput() throws ConfigManagerProxyPropertyNotInitializedException, XPathExpressionException, SAXException, IOException, ParserConfigurationException {	
 		
 		// PreTransform Node
-		List<RecordedTestData> dataList = getTestDataList("MQ Output", true);
+		List<RecordedTestData> dataList = getTestDataList("Logging Output");
 				
 		String json = getNodeOutputJsonStringFromBlob(dataList.get(0));
 		ExceptionMessage out = gson.fromJson(json, ExceptionMessage.class);
