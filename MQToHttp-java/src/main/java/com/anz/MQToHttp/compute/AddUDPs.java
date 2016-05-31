@@ -78,6 +78,23 @@ public class AddUDPs extends CommonJavaCompute {
 				.createElementBefore(MbElement.TYPE_NAME_VALUE, "HTTPInputHeader", "")
 				.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "Content-Type", "");
 		contentType.setValue("application/json");
+		
+		// Create Transaction ID HTTP Input Header
+		MbElement transId = outAssembly.getMessage().getRootElement()
+				.getFirstElementByPath("/BLOB")
+				.createElementBefore(MbElement.TYPE_NAME_VALUE, "HTTPInputHeader", "")
+				.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "Transaction-Id", "");
+		
+		// Get Message Id
+		MbElement msgId = outAssembly.getMessage().getRootElement()
+				.getFirstElementByPath("/MQMD/MsgId");
+		
+		logger.info("msgId value = {}, string = {}", msgId.getValue(), msgId.getValueAsString());
+		
+		// Set transaction Id to Message Id
+		transId.setValue(msgId.getValueAsString());
+		
+		logger.info("transId = {}", transId.getValue());
 				
 	}
 
