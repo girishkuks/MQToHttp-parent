@@ -15,9 +15,10 @@
  	
 
 	<scm>
-		<connection>scm:git:${gitUrl}</connection>
-		<developerConnection>scm:git:${gitUrl}</developerConnection>
-	</scm>
+    	   <url>scm:git:${scm.url}</url>
+	   <connection>scm:git:${scm.url}</connection>
+	   <developerConnection>scm:git:${scm.url}</developerConnection>
+    	</scm>
 
 
 	<modules>
